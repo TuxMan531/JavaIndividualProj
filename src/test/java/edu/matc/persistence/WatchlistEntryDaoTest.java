@@ -49,6 +49,14 @@ class WatchlistEntryDaoTest {
         assertEquals(3, entries.size()); // 3 in cleandb.sql
     }
 
+    /** verifies one user's entries can be found by the user */
+    @Test
+    void getByPropertyEqualSuccess() {
+        User user = userDao.getById(1);
+        List<WatchlistEntry> entries = dao.getByPropertyEqual("user", user);
+        assertEquals(2, entries.size()); // moviefan1 has dune and the matrix
+    }
+
     /** verifies a new entry saves and can be read back */
     @Test
     void insertSuccess() {

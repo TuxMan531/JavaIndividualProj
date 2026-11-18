@@ -2,6 +2,7 @@ package edu.matc.persistence;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -46,6 +47,25 @@ public class GenericDao<T> {
             query.from(type);
             List<T> entities = session.createSelectionQuery(query).getResultList();
             logger.debug("Retrieved {} {} records", entities.size(), type.getSimpleName());
+            return entities;
+        }
+    }
+
+    /**
+     * gets the entities where a property equals a value
+     * ex getByPropertyEqual("user", user) for one persons watchlist
+     * @param propertyName the entity field to search by, the java name not the column name
+     * @param value the value to match
+     * @return the matching entities
+     */
+    public List<T> getByPropertyEqual(String propertyName, Object value) {
+        try (Session session = getSession()) {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<T> query = builder.createQuery(type);
+            Root<T> root = query.from(type);
+            query.select(root).where(builder.equal(root.get(propertyName), value));
+            List<T> entities = session.createSelectionQuery(query).getResultList();
+            logger.debug("Found {} {} records by {}", entities.size(), type.getSimpleName(), propertyName);
             return entities;
         }
     }
