@@ -32,7 +32,7 @@ class WatchlistEntryDaoTest {
 
     /** verifies a sample entry comes back with its user and movie */
     @Test
-    void getByIdSuccess() {
+    void findsEntryById() {
         User expectedUser = userDao.getById(1);
         Movie expectedMovie = movieDao.getById(4); // the matrix
         WatchlistEntry expectedEntry = new WatchlistEntry(expectedUser, expectedMovie, true);
@@ -45,14 +45,14 @@ class WatchlistEntryDaoTest {
 
     /** verifies all the sample entries are returned */
     @Test
-    void getAllSuccess() {
+    void listsAllEntries() {
         List<WatchlistEntry> entries = dao.getAll();
         assertEquals(3, entries.size()); // 3 in cleandb.sql
     }
 
     /** verifies one user's entries can be found by the user */
     @Test
-    void getByPropertyEqualSuccess() {
+    void findsEntriesForUser() {
         User user = userDao.getById(1);
         List<WatchlistEntry> entries = dao.getByPropertyEqual("user", user);
         assertEquals(2, entries.size()); // moviefan1 has dune and the matrix
@@ -60,7 +60,7 @@ class WatchlistEntryDaoTest {
 
     /** verifies a new entry saves and can be read back */
     @Test
-    void insertSuccess() {
+    void savesNewEntry() {
         User user = userDao.getById(2);
         Movie movie = movieDao.getById(3); // interstellar
         WatchlistEntry newEntry = new WatchlistEntry(user, movie, false);
@@ -74,14 +74,14 @@ class WatchlistEntryDaoTest {
 
     /** verifies a user can't save the same movie twice, the unique key on the table stops it */
     @Test
-    void insertDuplicateFails() {
+    void rejectsSavingSameMovieTwice() {
         WatchlistEntry duplicateEntry = new WatchlistEntry(userDao.getById(1), movieDao.getById(1), false);
         assertThrows(ConstraintViolationException.class, () -> dao.insert(duplicateEntry));
     }
 
     /** verifies the rejected duplicate dosen't mess with the user's watchlist */
     @Test
-    void insertDuplicateKeepsOneEntry() {
+    void keepsOneEntryAfterDuplicateSave() {
         User user = userDao.getById(1);
         WatchlistEntry duplicateEntry = new WatchlistEntry(user, movieDao.getById(1), false);
         assertThrows(ConstraintViolationException.class, () -> dao.insert(duplicateEntry));
@@ -90,7 +90,7 @@ class WatchlistEntryDaoTest {
 
     /** verifies an entry can be marked as watched and it persits */
     @Test
-    void updateSuccess() {
+    void marksEntryWatched() {
         WatchlistEntry entryToUpdate = dao.getById(1);
         entryToUpdate.setWatched(true);
         dao.update(entryToUpdate);
@@ -100,14 +100,14 @@ class WatchlistEntryDaoTest {
 
     /** verifies an entry can be removed from a watchlist */
     @Test
-    void deleteSuccess() {
+    void removesEntry() {
         dao.delete(dao.getById(1));
         assertNull(dao.getById(1));
     }
 
     /** verifies a second user can save a movie someone else already saved */
     @Test
-    void insertSameMovieForAnotherUserSuccess() {
+    void letsTwoUsersSaveSameMovie() {
         User user = userDao.getById(2);
         Movie movie = movieDao.getById(4); // moviefan1 already has this one
         WatchlistEntry newEntry = new WatchlistEntry(user, movie, false);
@@ -120,7 +120,7 @@ class WatchlistEntryDaoTest {
 
     /** verifies searching by user only gives back that user's entries */
     @Test
-    void getByPropertyEqualReturnsOnlyThatUsersEntries() {
+    void showsOnlyThatUsersEntries() {
         User user = userDao.getById(1);
         List<WatchlistEntry> entries = dao.getByPropertyEqual("user", user);
         for (WatchlistEntry entry : entries) {
@@ -130,7 +130,7 @@ class WatchlistEntryDaoTest {
 
     /** verifies marking one user's entry watched leaves the other user's entry for the same movie unwatched */
     @Test
-    void updateLeavesOtherUsersEntry() {
+    void watchingKeepsOtherUsersEntryUnwatched() {
         WatchlistEntry entryToUpdate = dao.getById(1);
         entryToUpdate.setWatched(true);
         dao.update(entryToUpdate);
@@ -139,14 +139,14 @@ class WatchlistEntryDaoTest {
 
     /** verifies removing one user's entry leaves the other user's entry for the same movie alone */
     @Test
-    void deleteLeavesOtherUsersEntry() {
+    void removingKeepsOtherUsersEntry() {
         dao.delete(dao.getById(1));
         assertNotNull(dao.getById(3));
     }
 
     /** verifies removing an entry dosen't delete the user or the movie too */
     @Test
-    void deleteLeavesUserAndMovie() {
+    void removingKeepsUserAndMovie() {
         dao.delete(dao.getById(1));
         assertNotNull(userDao.getById(1));
         assertNotNull(movieDao.getById(1));
