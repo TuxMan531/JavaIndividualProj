@@ -49,7 +49,3 @@ crashlytics-build.properties
 fabric.properties
 # macOS
 .DS_Store
-
-# Local database settings and passwords
-hibernate.cfg.xml
-database.properties
