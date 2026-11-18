@@ -3,27 +3,45 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Find a Film · Discover</title>
+  <title>Movie Hunter · Discover</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header><div class="wrap mast">
-    <a class="brand" href="#search">Find a Film<span>.</span></a>
+    <a class="brand" href="#search">Movie Hunter</a>
     <nav aria-label="Main navigation">
       <a href="#search" id="search-link">Discover</a>
       <a href="#watchlist" id="list-link">Watchlist</a>
     </nav>
     <form id="search-form" role="search">
       <input id="query" type="search" aria-label="Movie title or release year" placeholder="Search films…" autocomplete="off">
-      <button class="search-button" aria-label="Search films"><span aria-hidden="true"></span></button>
+      <button>Search</button>
     </form>
     <button id="account">Sign in</button>
   </div></header>
   <main class="wrap">
     <section id="discover">
-      <h1>Explore your favorites</h1>
+      <h1 id="heading">Popular movies now</h1>
       <p id="result-count" class="count" aria-live="polite"></p>
       <div id="results" class="cards"></div>
+      <div id="browse">
+        <section>
+          <h2>Top movies in your region</h2>
+          <div class="carousel">
+            <button id="previous" aria-label="Previous regional movie">←</button>
+            <p id="regional-film" aria-live="polite"></p>
+            <button id="next" aria-label="Next regional movie">→</button>
+          </div>
+        </section>
+        <section>
+          <h2>Browse by genre</h2>
+          <label for="genre">Genre</label>
+          <select id="genre">
+            <option>All genres</option><option>Sci-Fi</option><option>Drama</option><option>Crime</option>
+          </select>
+          <ul id="genre-films"></ul>
+        </section>
+      </div>
     </section>
     <section id="library" hidden>
       <h1>Your watchlist</h1><p id="list-count" class="count"></p><div id="saved" class="cards"></div>
@@ -32,14 +50,14 @@
   </main>
   <dialog id="login" aria-labelledby="login-title">
     <form method="dialog"><button class="close" aria-label="Close sign-in">×</button></form>
-    <h2 id="login-title">Sign in to Find a Film</h2>
+    <h2 id="login-title">Sign in to Movie Hunter</h2>
     <p>Try the watchlist with a demo account. Your selections last until you reload this page.</p>
     <button class="primary" id="continue">Continue as demo viewer</button>
   </dialog>
   <template id="movie">
     <article>
-      <div class="poster"><img alt=""><a class="rating" target="_blank" rel="noreferrer"></a></div>
-      <div class="body"><p class="metadata"></p><h2></h2><p class="summary"></p><div class="actions"></div></div>
+      <div class="poster" aria-hidden="true">Example</div>
+      <div class="body"><p class="metadata"></p><h2></h2><a class="rating" target="_blank" rel="noreferrer"></a><p class="summary"></p><div class="actions"></div></div>
     </article>
   </template>
   <script src="mockup.js"></script>

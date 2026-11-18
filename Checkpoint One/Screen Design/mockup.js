@@ -32,7 +32,6 @@ function save(film) {
 }
 function card(film, inLibrary) {
   const item = byId('movie').content.firstElementChild.cloneNode(true);
-  item.querySelector('img').src = 'art/' + film.id + '.jpg';
   item.querySelector('h2').textContent = film.title;
   item.querySelector('.metadata').textContent = film.year + ' · ' + film.genre;
   const rating = item.querySelector('.rating');
@@ -71,12 +70,11 @@ function render() {
   const found = query
     ? films.filter(film => (film.title + ' ' + film.year).toLowerCase().includes(query.toLowerCase()))
     : films.filter(film => film.featured);
+  byId('heading').textContent = query ? 'Search results' : 'Popular movies now';
+  byId('browse').hidden = Boolean(query);
   const count = byId('result-count');
   if (!query) {
-    const chart = document.createElement('a');
-    chart.href = 'https://www.imdb.com/chart/top/';
-    chart.textContent = 'IMDb Top 250';
-    count.replaceChildren('Four picks from the ', chart);
+    count.textContent = 'Sample movies for this design.';
   } else {
     count.textContent = found.length
       ? found.length + (found.length === 1 ? ' film' : ' films') + ' matching “' + query + '”'
@@ -87,6 +85,13 @@ function render() {
   byId('list-count').textContent = !signedIn ? 'Sign in to see your saved films.' : saved.length ? saved.length + (saved.length === 1 ? ' saved film' : ' saved films') : 'Your watchlist is empty. Find a film in Discover to get started.';
   byId('saved').replaceChildren(...saved.map(f => card(f, true)));
 }
+function resetSearch() {
+  query = '';
+  byId('query').value = '';
+  render();
+}
+byId('search-link').onclick = resetSearch;
+document.querySelector('.brand').onclick = resetSearch;
 byId('account').onclick = () => {
   if (signedIn) { signedIn = false; render(); announce('Signed out.'); }
   else { pendingFilm = null; byId('login').showModal(); }
@@ -106,4 +111,26 @@ byId('search-form').onsubmit = event => {
   render();
 };
 window.addEventListener('hashchange', () => { announce(''); render(); });
+// Use sample titles for the regional carousel in this wireframe.
+const regionalPicks = [films[4], films[2], films[1]];
+let regionalIndex = 0;
+function showRegional(offset) {
+  regionalIndex = (regionalIndex + offset + regionalPicks.length) % regionalPicks.length;
+  const film = regionalPicks[regionalIndex];
+  byId('regional-film').textContent = film.title + ' (' + film.year + ') · ' + film.rating + '/10';
+}
+function showGenre() {
+  const genre = byId('genre').value;
+  const matches = films.filter(film => genre === 'All genres' || film.genre === genre);
+  byId('genre-films').replaceChildren(...matches.map(film => {
+    const item = document.createElement('li');
+    item.textContent = film.title + ' (' + film.year + ')';
+    return item;
+  }));
+}
+byId('previous').onclick = () => showRegional(-1);
+byId('next').onclick = () => showRegional(1);
+byId('genre').onchange = showGenre;
+showRegional(0);
+showGenre();
 render();

@@ -1,4 +1,4 @@
-# Find a Film project plan
+# Movie Hunter project plan
 
 The dates below are proposed build targets. November 18 is the catch-up target for the three course checkpoints. The final individual project is due December 16 at 9 p.m. Central.
 
@@ -11,6 +11,6 @@ The dates below are proposed build targets. November 18 is the catch-up target f
 | Nov 26–Dec 9 · Review and revision | Test all five stories on phone and desktop. Complete the required design/code reviews with at least two peers and the instructor. Keep weekly reflections. Agree on an independent technology with the instructor; a bounded cache for repeated searches is one candidate. | Link feedback to specific revisions. If using a cache, verify that repeated queries avoid redundant provider requests and that expired results refresh. |
 | Dec 10–16 · Final delivery | Recheck the public app, generate HTML JavaDoc, publish supporting materials, and prepare the class presentation and public demo video. | From the README, a reviewer can reach the app, documentation, and video. The demonstration covers search, save, persistence, ownership, and the independent technology. |
 
-**Checkpoint 1 reminder for later.** Once the checkpoint materials are ready, add the URL of this repository to the instructor’s class project list. [Find a Film repository](https://github.com/TuxMan531/JavaIndividualProj) · [Class project list](https://github.com/mad-ent-java-f26/student/blob/main/IndividualProjects.md)
+**Checkpoint 1 reminder for later.** Once the checkpoint materials are ready, add the URL of this repository to the instructor’s class project list. [Movie Hunter repository](https://github.com/TuxMan531/JavaIndividualProj) · [Class project list](https://github.com/mad-ent-java-f26/student/blob/main/IndividualProjects.md)
 
 [Official checkpoint requirements and rubric](https://paulawaite.com/education/java113/IndividualProject.html#checkpoints)
