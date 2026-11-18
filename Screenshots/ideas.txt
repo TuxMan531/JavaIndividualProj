@@ -1,0 +1,8 @@
+I'm thinking that the homepage will have more section and cards that follow a similar pattern just with different themes,
+maybe a personal recommendation carousel that could be cool
+
+also the watchlist will house movies the user has watched and movies they've already watched and or rated,
+ but that will be a different section in the watchlist page
+this is the general user flow of the site though all the information easily in front of the user with a search bar in the top right
+
+-- made in basic html

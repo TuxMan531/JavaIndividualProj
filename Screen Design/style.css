@@ -18,7 +18,7 @@ article { max-width: 320px; border: 1px solid #aaa; }
 .carousel p:target, .carousel:not(:has(:target)) p:first-child { display: flex; }
 summary, label { cursor: pointer; }
 
-/* One set of cards serves Discover, the Dune example, and the watchlist. */
+/* set of cards does discover and the moive example and watchlist */
 #results, #watchlist, .dune, .empty, .remove-label, .watched { display: none; }
 #results:target, #watchlist:target, #results:target ~ .cards .dune { display: block; }
 main:has(h1:target:not(#discover)) :is(#discover, .demo-note, .browse),
