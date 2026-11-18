@@ -1,0 +1,35 @@
+* { box-sizing: border-box; }
+body { margin: 0; color: #282828; font: 16px/1.45 system-ui, sans-serif; }
+.wrap { max-width: 1080px; margin: auto; padding: 16px; }
+header, nav, .search { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+header { border-bottom: 1px solid #bbb; }
+.brand { font-size: 22px; font-weight: bold; text-decoration: none; }
+.search { margin-left: auto; }
+.search input { width: 12em; padding: 4px; font: inherit; }
+a { color: inherit; }
+h1, h2, h3, p { margin: 0 0 10px; }
+section { margin-top: 24px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 12px; }
+article { max-width: 320px; border: 1px solid #aaa; }
+.poster { display: grid; height: 155px; place-items: center; background: #eee; }
+.body { padding: 12px; font-size: 14px; }
+.carousel { max-width: 440px; border: 1px solid #aaa; padding: 10px; }
+.carousel p { display: none; margin: 0; justify-content: space-between; }
+.carousel p:target, .carousel:not(:has(:target)) p:first-child { display: flex; }
+summary, label { cursor: pointer; }
+
+/* set of cards does discover and the moive example and watchlist */
+#results, #watchlist, .dune, .empty, .remove-label, .watched { display: none; }
+#results:target, #watchlist:target, #results:target ~ .cards .dune { display: block; }
+main:has(h1:target:not(#discover)) :is(#discover, .demo-note, .browse),
+#results:target ~ .cards .featured,
+#watchlist:target ~ .cards article:not(:has(.saved:checked)) { display: none; }
+#watchlist:target ~ .cards article:has(.saved:checked),
+#watchlist:target ~ .cards .watched,
+main:not(:has(.saved:checked)) #watchlist:target ~ .empty { display: block; }
+.saved:checked ~ .save-label { display: none; }
+.saved:checked ~ .remove-label { display: inline; }
+
+@media (max-width: 680px) {
+  .search { width: 100%; margin: 0; }
+}
