@@ -1,9 +1,13 @@
 package edu.matc.persistence;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import java.util.List;
 
 /**
  * one dao for every entity so i dont have to write a new one for each table
@@ -31,6 +35,18 @@ public class GenericDao<T> {
     public T getById(int id) {
         try (Session session = getSession()) {
             return session.get(type, id);
+        }
+    }
+
+    /** @return every entity of this type */
+    public List<T> getAll() {
+        try (Session session = getSession()) {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<T> query = builder.createQuery(type);
+            query.from(type);
+            List<T> entities = session.createSelectionQuery(query).getResultList();
+            logger.debug("Retrieved {} {} records", entities.size(), type.getSimpleName());
+            return entities;
         }
     }
 

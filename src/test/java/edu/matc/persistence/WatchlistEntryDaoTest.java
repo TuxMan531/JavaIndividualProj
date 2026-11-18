@@ -7,6 +7,8 @@ import edu.matc.util.Database;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /** tests watchlist entries going through the generic dao */
@@ -38,6 +40,13 @@ class WatchlistEntryDaoTest {
         assertEquals(expectedEntry, retrievedEntry);
         assertEquals(expectedUser, retrievedEntry.getUser());
         assertEquals(expectedMovie, retrievedEntry.getMovie());
+    }
+
+    /** verifies all the sample entries are returned */
+    @Test
+    void getAllSuccess() {
+        List<WatchlistEntry> entries = dao.getAll();
+        assertEquals(3, entries.size()); // 3 in cleandb.sql
     }
 
     /** verifies a new entry saves and can be read back */
