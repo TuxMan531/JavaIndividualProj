@@ -23,7 +23,6 @@ article { border: 1px solid #aaa; max-width: 320px; }
 dialog { max-width: min(360px, 90vw); }
 .close { float: right; }
 @media (max-width: 680px) {
-  #account { margin-left: auto; }
   #search-form { width: 100%; order: 1; }
   #query { min-width: 0; flex: 1; }
 }

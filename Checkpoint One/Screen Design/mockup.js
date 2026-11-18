@@ -63,7 +63,6 @@ function render() {
   const inLibrary = location.hash === '#watchlist';
   byId('library').hidden = !inLibrary;
   byId('discover').hidden = inLibrary;
-  byId('account').textContent = signedIn ? 'Sign out' : 'Sign in';
   byId('search-link').removeAttribute('aria-current');
   byId('list-link').removeAttribute('aria-current');
   byId(inLibrary ? 'list-link' : 'search-link').setAttribute('aria-current', 'page');
@@ -82,7 +81,7 @@ function render() {
   }
   byId('results').replaceChildren(...found.map(f => card(f, false)));
   const saved = films.filter(f => signedIn && watchlist.has(f.id));
-  byId('list-count').textContent = !signedIn ? 'Sign in to see your saved films.' : saved.length ? saved.length + (saved.length === 1 ? ' saved film' : ' saved films') : 'Your watchlist is empty. Find a film in Discover to get started.';
+  byId('list-count').textContent = !signedIn ? 'Choose a movie in Discover and save it to start your watchlist.' : saved.length ? saved.length + (saved.length === 1 ? ' saved film' : ' saved films') : 'Your watchlist is empty. Find a film in Discover to get started.';
   byId('saved').replaceChildren(...saved.map(f => card(f, true)));
 }
 function resetSearch() {
@@ -92,10 +91,6 @@ function resetSearch() {
 }
 byId('search-link').onclick = resetSearch;
 document.querySelector('.brand').onclick = resetSearch;
-byId('account').onclick = () => {
-  if (signedIn) { signedIn = false; render(); announce('Signed out.'); }
-  else { pendingFilm = null; byId('login').showModal(); }
-};
 byId('continue').onclick = () => {
   signedIn = true;
   byId('login').close();
