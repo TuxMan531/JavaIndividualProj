@@ -104,4 +104,51 @@ class WatchlistEntryDaoTest {
         dao.delete(dao.getById(1));
         assertNull(dao.getById(1));
     }
+
+    /** verifies a second user can save a movie someone else already saved */
+    @Test
+    void insertSameMovieForAnotherUserSuccess() {
+        User user = userDao.getById(2);
+        Movie movie = movieDao.getById(4); // moviefan1 already has this one
+        WatchlistEntry newEntry = new WatchlistEntry(user, movie, false);
+        int id = dao.insert(newEntry);
+        WatchlistEntry insertedEntry = dao.getById(id);
+        assertEquals(newEntry, insertedEntry);
+        assertEquals(user, insertedEntry.getUser());
+        assertEquals(movie, insertedEntry.getMovie());
+    }
+
+    /** verifies searching by user only gives back that user's entries */
+    @Test
+    void getByPropertyEqualReturnsOnlyThatUsersEntries() {
+        User user = userDao.getById(1);
+        List<WatchlistEntry> entries = dao.getByPropertyEqual("user", user);
+        for (WatchlistEntry entry : entries) {
+            assertEquals(user, entry.getUser());
+        }
+    }
+
+    /** verifies marking one user's entry watched leaves the other user's entry for the same movie unwatched */
+    @Test
+    void updateLeavesOtherUsersEntry() {
+        WatchlistEntry entryToUpdate = dao.getById(1);
+        entryToUpdate.setWatched(true);
+        dao.update(entryToUpdate);
+        assertFalse(dao.getById(3).isWatched()); // entry 3 is moviefan2's dune
+    }
+
+    /** verifies removing one user's entry leaves the other user's entry for the same movie alone */
+    @Test
+    void deleteLeavesOtherUsersEntry() {
+        dao.delete(dao.getById(1));
+        assertNotNull(dao.getById(3));
+    }
+
+    /** verifies removing an entry dosen't delete the user or the movie too */
+    @Test
+    void deleteLeavesUserAndMovie() {
+        dao.delete(dao.getById(1));
+        assertNotNull(userDao.getById(1));
+        assertNotNull(movieDao.getById(1));
+    }
 }
