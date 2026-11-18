@@ -3,62 +3,105 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Movie Hunter · Discover</title>
+  <title>Movie Hunter</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header><div class="wrap mast">
-    <a class="brand" href="#search">Movie Hunter</a>
+  <header class="wrap">
+    <a class="brand" href="#discover">Movie Hunter</a>
     <nav aria-label="Main navigation">
-      <a href="#search" id="search-link">Discover</a>
-      <a href="#watchlist" id="list-link">Watchlist</a>
+      <a href="#discover">Discover</a>
+      <a href="#watchlist">Watchlist</a>
     </nav>
-    <form id="search-form" role="search">
-      <input id="query" type="search" aria-label="Movie title or release year" placeholder="Search films…" autocomplete="off">
-      <button>Search</button>
-    </form>
-  </div></header>
+    <div class="search" role="search">
+      <input type="search" value="Dune" readonly aria-label="Example search for Dune">
+      <a href="#results">Search</a>
+    </div>
+  </header>
   <main class="wrap">
-    <section id="discover">
-      <h1 id="heading">Popular movies now</h1>
-      <p id="result-count" class="count" aria-live="polite"></p>
-      <div id="results" class="cards"></div>
-      <div id="browse">
-        <section>
-          <h2>Top movies in your region</h2>
-          <div class="carousel">
-            <button id="previous" aria-label="Previous regional movie">←</button>
-            <p id="regional-film" aria-live="polite"></p>
-            <button id="next" aria-label="Next regional movie">→</button>
-          </div>
-        </section>
-        <section>
-          <h2>Browse by genre</h2>
-          <label for="genre">Genre</label>
-          <select id="genre">
-            <option>All genres</option><option>Sci-Fi</option><option>Drama</option><option>Crime</option>
-          </select>
-          <ul id="genre-films"></ul>
-        </section>
-      </div>
-    </section>
-    <section id="library" hidden>
-      <h1>Your watchlist</h1><p id="list-count" class="count"></p><div id="saved" class="cards"></div>
-    </section>
-    <p role="status" id="notice"></p>
+    <h1 id="discover">Popular movies now</h1>
+    <h1 id="results">Search results for “Dune”</h1>
+    <h1 id="watchlist">Your watchlist</h1>
+    <p class="demo-note">Sample movies for this design. Try the Dune search or save a title.</p>
+    <p class="empty">Your watchlist is empty. <a href="#discover">Browse movies</a></p>
+    <div class="cards">
+      <article class="featured">
+        <div class="poster" aria-hidden="true">Example</div>
+        <div class="body">
+          <h3>Interstellar</h3>
+          <p>2014 · Sci-Fi · <a href="https://www.imdb.com/title/tt0816692/ratings/">IMDb 8.7/10</a></p>
+          <p>A pilot leaves his family on a failing Earth to search for a new home beyond a wormhole.</p>
+          <label><input class="saved" type="checkbox"> <span class="save-label">Save to watchlist</span><span class="remove-label">In watchlist (uncheck to remove)</span></label>
+          <label class="watched"><input type="checkbox"> Watched</label>
+        </div>
+      </article>
+      <article class="featured">
+        <div class="poster" aria-hidden="true">Example</div>
+        <div class="body">
+          <h3>The Matrix</h3>
+          <p>1999 · Sci-Fi · <a href="https://www.imdb.com/title/tt0133093/ratings/">IMDb 8.7/10</a></p>
+          <p>A hacker follows a stranger out of the world he knows and learns who built it.</p>
+          <label><input class="saved" type="checkbox"> <span class="save-label">Save to watchlist</span><span class="remove-label">In watchlist (uncheck to remove)</span></label>
+          <label class="watched"><input type="checkbox"> Watched</label>
+        </div>
+      </article>
+      <article class="featured">
+        <div class="poster" aria-hidden="true">Example</div>
+        <div class="body">
+          <h3>The Dark Knight</h3>
+          <p>2008 · Crime · <a href="https://www.imdb.com/title/tt0468569/ratings/">IMDb 9.1/10</a></p>
+          <p>Batman and Gotham’s new district attorney face a criminal who wants the city to turn on its heroes.</p>
+          <label><input class="saved" type="checkbox"> <span class="save-label">Save to watchlist</span><span class="remove-label">In watchlist (uncheck to remove)</span></label>
+          <label class="watched"><input type="checkbox"> Watched</label>
+        </div>
+      </article>
+      <article class="featured">
+        <div class="poster" aria-hidden="true">Example</div>
+        <div class="body">
+          <h3>The Shawshank Redemption</h3>
+          <p>1994 · Drama · <a href="https://www.imdb.com/title/tt0111161/ratings/">IMDb 9.3/10</a></p>
+          <p>Inside Shawshank prison, a banker and a longtime inmate build a friendship that spans decades.</p>
+          <label><input class="saved" type="checkbox"> <span class="save-label">Save to watchlist</span><span class="remove-label">In watchlist (uncheck to remove)</span></label>
+          <label class="watched"><input type="checkbox"> Watched</label>
+        </div>
+      </article>
+      <article class="dune">
+        <div class="poster" aria-hidden="true">Example</div>
+        <div class="body">
+          <h3>Dune</h3>
+          <p>2021 · Sci-Fi · <a href="https://www.imdb.com/title/tt1160419/ratings/">IMDb 8.0/10</a></p>
+          <p>Paul Atreides travels to Arrakis as rival houses compete for control of its spice.</p>
+          <label><input class="saved" type="checkbox"> <span class="save-label">Save to watchlist</span><span class="remove-label">In watchlist (uncheck to remove)</span></label>
+          <label class="watched"><input type="checkbox"> Watched</label>
+        </div>
+      </article>
+      <article class="dune">
+        <div class="poster" aria-hidden="true">Example</div>
+        <div class="body">
+          <h3>Dune</h3>
+          <p>1984 · Sci-Fi · <a href="https://www.imdb.com/title/tt0087182/ratings/">IMDb 6.2/10</a></p>
+          <p>David Lynch’s adaptation follows a young heir into a struggle over a desert planet.</p>
+          <label><input class="saved" type="checkbox"> <span class="save-label">Save to watchlist</span><span class="remove-label">In watchlist (uncheck to remove)</span></label>
+          <label class="watched"><input type="checkbox"> Watched</label>
+        </div>
+      </article>
+    </div>
+    <div class="browse">
+      <section>
+        <h2>Top movies in your region</h2>
+        <div class="carousel" aria-label="Sample regional picks">
+          <p id="pick-1"><a href="#pick-3" aria-label="Previous movie">←</a> Dune (2021) <a href="#pick-2" aria-label="Next movie">→</a></p>
+          <p id="pick-2"><a href="#pick-1" aria-label="Previous movie">←</a> The Dark Knight (2008) <a href="#pick-3" aria-label="Next movie">→</a></p>
+          <p id="pick-3"><a href="#pick-2" aria-label="Previous movie">←</a> The Matrix (1999) <a href="#pick-1" aria-label="Next movie">→</a></p>
+        </div>
+      </section>
+      <section>
+        <h2>Browse by genre</h2>
+        <details><summary>Sci-Fi</summary><ul><li>Interstellar (2014)</li><li>The Matrix (1999)</li><li>Dune (1984)</li><li>Dune (2021)</li></ul></details>
+        <details><summary>Crime</summary><p>The Dark Knight (2008)</p></details>
+        <details><summary>Drama</summary><p>The Shawshank Redemption (1994)</p></details>
+      </section>
+    </div>
   </main>
-  <dialog id="login" aria-labelledby="login-title">
-    <form method="dialog"><button class="close" aria-label="Close sign-in">×</button></form>
-    <h2 id="login-title">Sign in to Movie Hunter</h2>
-    <p>Try the watchlist with a demo account. Your selections last until you reload this page.</p>
-    <button class="primary" id="continue">Continue as demo viewer</button>
-  </dialog>
-  <template id="movie">
-    <article>
-      <div class="poster" aria-hidden="true">Example</div>
-      <div class="body"><p class="metadata"></p><h2></h2><a class="rating" target="_blank" rel="noreferrer"></a><p class="summary"></p><div class="actions"></div></div>
-    </article>
-  </template>
-  <script src="mockup.js"></script>
 </body>
 </html>

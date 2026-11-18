@@ -1,28 +1,35 @@
 * { box-sizing: border-box; }
-body { margin: 0; font: 16px/1.45 system-ui, sans-serif; color: #282828; }
-header { border-bottom: 1px solid #bbb; }
+body { margin: 0; color: #282828; font: 16px/1.45 system-ui, sans-serif; }
 .wrap { max-width: 1080px; margin: auto; padding: 16px; }
-.mast, nav, .actions, .carousel { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+header, nav, .search { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+header { border-bottom: 1px solid #bbb; }
 .brand { font-size: 22px; font-weight: bold; text-decoration: none; }
+.search { margin-left: auto; }
+.search input { width: 12em; padding: 4px; font: inherit; }
 a { color: inherit; }
-nav a[aria-current="page"] { font-weight: bold; }
-#search-form { display: flex; margin-left: auto; gap: 4px; }
-button, input, select { font: inherit; padding: 4px 8px; }
-button { cursor: pointer; }
-h1, h2, p { margin: 0 0 10px; }
-main section { margin-block: 16px 28px; }
+h1, h2, h3, p { margin: 0 0 10px; }
+section { margin-top: 24px; }
 .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 12px; }
-article { border: 1px solid #aaa; max-width: 320px; }
-.poster { height: 155px; display: grid; place-items: center; color: #555; background: #eee; }
-.body { padding: 12px; }
-.body h2 { font-size: 18px; }
-.body p, .rating, .count { font-size: 14px; }
-.rating { display: inline-block; margin-bottom: 8px; }
-.carousel { max-width: 440px; justify-content: space-between; border: 1px solid #aaa; padding: 10px; }
-.carousel p { margin: 0; text-align: center; flex: 1; }
-dialog { max-width: min(360px, 90vw); }
-.close { float: right; }
+article { max-width: 320px; border: 1px solid #aaa; }
+.poster { display: grid; height: 155px; place-items: center; background: #eee; }
+.body { padding: 12px; font-size: 14px; }
+.carousel { max-width: 440px; border: 1px solid #aaa; padding: 10px; }
+.carousel p { display: none; margin: 0; justify-content: space-between; }
+.carousel p:target, .carousel:not(:has(:target)) p:first-child { display: flex; }
+summary, label { cursor: pointer; }
+
+/* One set of cards serves Discover, the Dune example, and the watchlist. */
+#results, #watchlist, .dune, .empty, .remove-label, .watched { display: none; }
+#results:target, #watchlist:target, #results:target ~ .cards .dune { display: block; }
+main:has(h1:target:not(#discover)) :is(#discover, .demo-note, .browse),
+#results:target ~ .cards .featured,
+#watchlist:target ~ .cards article:not(:has(.saved:checked)) { display: none; }
+#watchlist:target ~ .cards article:has(.saved:checked),
+#watchlist:target ~ .cards .watched,
+main:not(:has(.saved:checked)) #watchlist:target ~ .empty { display: block; }
+.saved:checked ~ .save-label { display: none; }
+.saved:checked ~ .remove-label { display: inline; }
+
 @media (max-width: 680px) {
-  #search-form { width: 100%; order: 1; }
-  #query { min-width: 0; flex: 1; }
+  .search { width: 100%; margin: 0; }
 }
