@@ -4,6 +4,7 @@ import edu.matc.entity.Movie;
 import edu.matc.entity.User;
 import edu.matc.entity.WatchlistEntry;
 import edu.matc.util.Database;
+import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -69,6 +70,22 @@ class WatchlistEntryDaoTest {
         assertEquals(newEntry, insertedEntry);
         assertEquals(user, insertedEntry.getUser());
         assertEquals(movie, insertedEntry.getMovie());
+    }
+
+    /** verifies a user can't save the same movie twice, the unique key on the table stops it */
+    @Test
+    void insertDuplicateFails() {
+        WatchlistEntry duplicateEntry = new WatchlistEntry(userDao.getById(1), movieDao.getById(1), false);
+        assertThrows(ConstraintViolationException.class, () -> dao.insert(duplicateEntry));
+    }
+
+    /** verifies the rejected duplicate dosen't mess with the user's watchlist */
+    @Test
+    void insertDuplicateKeepsOneEntry() {
+        User user = userDao.getById(1);
+        WatchlistEntry duplicateEntry = new WatchlistEntry(user, movieDao.getById(1), false);
+        assertThrows(ConstraintViolationException.class, () -> dao.insert(duplicateEntry));
+        assertEquals(2, dao.getByPropertyEqual("user", user).size()); // still 2
     }
 
     /** verifies an entry can be marked as watched and it persits */
