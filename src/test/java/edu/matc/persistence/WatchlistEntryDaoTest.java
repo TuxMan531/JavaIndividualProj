@@ -62,4 +62,14 @@ class WatchlistEntryDaoTest {
         assertEquals(user, insertedEntry.getUser());
         assertEquals(movie, insertedEntry.getMovie());
     }
+
+    /** verifies an entry can be marked as watched and it persits */
+    @Test
+    void updateSuccess() {
+        WatchlistEntry entryToUpdate = dao.getById(1);
+        entryToUpdate.setWatched(true);
+        dao.update(entryToUpdate);
+        WatchlistEntry entryAfterUpdate = dao.getById(1);
+        assertEquals(entryToUpdate, entryAfterUpdate);
+    }
 }

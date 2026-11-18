@@ -66,6 +66,19 @@ public class GenericDao<T> {
         }
     }
 
+    /**
+     * updates an entity
+     * @param entity the entity with its updated values
+     */
+    public void update(T entity) {
+        try (Session session = getSession()) {
+            Transaction transaction = session.beginTransaction();
+            T updatedEntity = session.merge(entity);
+            transaction.commit();
+            logger.debug("Updated {} with id {}", type.getSimpleName(), session.getIdentifier(updatedEntity));
+        }
+    }
+
     /** @return an open session from the session factory */
     private Session getSession() {
         return SessionFactoryProvider.getSessionFactory().openSession();
