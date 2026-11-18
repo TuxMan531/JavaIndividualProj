@@ -27,6 +27,19 @@ class WatchlistEntryDaoTest {
         movieDao = new GenericDao<>(Movie.class);
     }
 
+    /** verifies a sample entry comes back with its user and movie */
+    @Test
+    void getByIdSuccess() {
+        User expectedUser = userDao.getById(1);
+        Movie expectedMovie = movieDao.getById(4); // the matrix
+        WatchlistEntry expectedEntry = new WatchlistEntry(expectedUser, expectedMovie, true);
+        expectedEntry.setId(2);
+        WatchlistEntry retrievedEntry = dao.getById(2);
+        assertEquals(expectedEntry, retrievedEntry);
+        assertEquals(expectedUser, retrievedEntry.getUser());
+        assertEquals(expectedMovie, retrievedEntry.getMovie());
+    }
+
     /** verifies a new entry saves and can be read back */
     @Test
     void insertSuccess() {
