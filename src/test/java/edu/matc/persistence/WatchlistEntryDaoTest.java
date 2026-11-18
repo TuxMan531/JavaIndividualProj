@@ -72,4 +72,11 @@ class WatchlistEntryDaoTest {
         WatchlistEntry entryAfterUpdate = dao.getById(1);
         assertEquals(entryToUpdate, entryAfterUpdate);
     }
+
+    /** verifies an entry can be removed from a watchlist */
+    @Test
+    void deleteSuccess() {
+        dao.delete(dao.getById(1));
+        assertNull(dao.getById(1));
+    }
 }

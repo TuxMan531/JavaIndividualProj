@@ -79,6 +79,21 @@ public class GenericDao<T> {
         }
     }
 
+    /**
+     * deletes an entity
+     * @param entity the entity to delete
+     */
+    public void delete(T entity) {
+        try (Session session = getSession()) {
+            Transaction transaction = session.beginTransaction();
+            T entityToDelete = session.merge(entity); // merge first, hibernate wont remove a detached entity
+            Object id = session.getIdentifier(entityToDelete);
+            session.remove(entityToDelete);
+            transaction.commit();
+            logger.debug("Deleted {} with id {}", type.getSimpleName(), id);
+        }
+    }
+
     /** @return an open session from the session factory */
     private Session getSession() {
         return SessionFactoryProvider.getSessionFactory().openSession();
