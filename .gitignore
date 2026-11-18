@@ -49,3 +49,6 @@ crashlytics-build.properties
 fabric.properties
 # macOS
 .DS_Store
+
+# the aws version of the hibernate config, has the rds password in it
+hibernate.cfg.aws.xml
